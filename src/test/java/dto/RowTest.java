@@ -9,20 +9,19 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class RowTest {
+final public class RowTest {
 
 	@ParameterizedTest
 	@MethodSource("getTests")
 	public void testIfRowIsPrintedCorrectly(TestCase data) {
-		Row row = new Row(data.rowContents.toArray(new String[0]));
+		final Row row = new Row(data.rowContents.toArray(new String[0]));
 
-		String actual = row.toString();
-		StringBuilder builder = new StringBuilder();
+		final String actual = row.toString();
+		final StringBuilder builder = new StringBuilder();
 		builder.append("||");
 		data.rowContents.forEach ( it -> builder.append(String.format(" %s ", it)));
 		builder.append("||");
-
-		String expected = builder.toString();
+		final String expected = builder.toString();
 
 		assertEquals(expected, actual);
 	}
