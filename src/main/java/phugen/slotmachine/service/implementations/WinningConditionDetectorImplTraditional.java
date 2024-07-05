@@ -1,5 +1,6 @@
 package phugen.slotmachine.service.implementations;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import phugen.slotmachine.dto.Row;
 import phugen.slotmachine.service.interfaces.WinningConditionDetector;
@@ -14,6 +15,7 @@ import java.util.List;
  * either horizontally, vertically or diagonally, left-to-right or right-to-left.
  */
 @Service
+@Qualifier("playFair")
 final public class WinningConditionDetectorImplTraditional implements WinningConditionDetector {
 	@Override
 	public Boolean isWinningConditionMet(List<Row> rows) {

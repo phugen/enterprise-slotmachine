@@ -1,5 +1,6 @@
 package phugen.slotmachine.service.implementations;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import phugen.slotmachine.dto.Row;
 import phugen.slotmachine.service.interfaces.Displayable;
@@ -24,7 +25,7 @@ final public class TerminalSlotmachine implements Slotmachine {
 
 	public TerminalSlotmachine(
 			Displayable display,
-			WinningConditionDetector winningConditionDetector
+			@Qualifier("playFair") WinningConditionDetector winningConditionDetector
 	) {
 		this.display = display;
 		this.winningConditionDetector = winningConditionDetector;
