@@ -30,7 +30,7 @@ final public class SlotmachineStandardDisplay implements Displayable {
 	}
 
 	@Override
-	public void displayFarewellMessage(String message) {
+	public void displayMessage(String message) {
 		logger.info(message);
 		logger.info("\n");
 	}

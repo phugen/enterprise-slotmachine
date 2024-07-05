@@ -13,8 +13,8 @@ public interface Displayable {
 	<T> void display(List<T> toDisplay);
 
 	/**
-	 * Says goodbye.
+	 * Displays a simple message.
 	 * @param message The message to be displayed.
 	 */
-	void displayFarewellMessage(String message);
+	void displayMessage(String message);
 }

@@ -35,10 +35,10 @@ final public class TerminalSlotmachine implements Slotmachine {
 	@Override
 	public void play() {
 		display.display(rows);
-		display.displayFarewellMessage(getFarewellMessage());
+		display.displayMessage(getResultMessage());
 	}
 
-	private String getFarewellMessage() {
+	private String getResultMessage() {
 		final String positiveMessage = "Congratulations! You won! Your prize is a job offer!";
 		final String negativeMessage = "No luck this time. Try again!";
 		final Boolean isGameWon = winningConditionDetector.isWinningConditionMet(rows);
