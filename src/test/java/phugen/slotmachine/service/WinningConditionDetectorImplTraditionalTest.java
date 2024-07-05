@@ -3,6 +3,8 @@ package phugen.slotmachine.service;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import phugen.slotmachine.dto.Row;
+import phugen.slotmachine.service.implementations.WinningConditionDetectorImplTraditional;
+import phugen.slotmachine.service.interfaces.WinningConditionDetector;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -101,6 +103,16 @@ final public class WinningConditionDetectorImplTraditionalTest {
 								new Row("x", "h", "i")
 						),
 						"Should return true because there were three symbols of a kind on the main diagonal",
+						true
+				),
+				new TestCase(
+						List.of(
+								new Row("a", "b", "c", "x"),
+								new Row("e", "f", "x", "h"),
+								new Row("i", "x", "k", "l"),
+								new Row("x", "n", "o", "p")
+						),
+						"Should return true because there were four symbols of a kind on the main diagonal",
 						true
 				)
 		);

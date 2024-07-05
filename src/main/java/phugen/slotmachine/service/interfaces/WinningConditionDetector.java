@@ -1,4 +1,4 @@
-package phugen.slotmachine.service;
+package phugen.slotmachine.service.interfaces;
 
 import phugen.slotmachine.dto.Row;
 

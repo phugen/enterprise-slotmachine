@@ -1,7 +1,8 @@
-package phugen.slotmachine.service;
+package phugen.slotmachine.service.implementations;
 
 import org.springframework.stereotype.Service;
 import phugen.slotmachine.dto.Row;
+import phugen.slotmachine.service.interfaces.WinningConditionDetector;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,7 +10,7 @@ import java.util.List;
 
 /**
  * This class implements a "traditional" winning condition detection. Traditional means
- * that the winning condition is that three symbols of a kind are present
+ * that the winning condition is that symbols of a kind are present
  * either horizontally, vertically or diagonally, left-to-right or right-to-left.
  */
 @Service
