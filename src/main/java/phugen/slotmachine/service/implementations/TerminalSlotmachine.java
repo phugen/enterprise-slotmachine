@@ -10,6 +10,9 @@ import phugen.slotmachine.service.interfaces.WinningConditionDetector;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
+
+import static java.lang.System.exit;
 
 /**
  * This class represents an emulated slot machine that can
@@ -21,7 +24,7 @@ final public class TerminalSlotmachine implements Slotmachine {
 	private final int slotMachineRowSize = 3;
 	private final Displayable display;
 	private final WinningConditionDetector winningConditionDetector;
-	private final List<Row> rows;
+	private List<Row> rows;
 
 	public TerminalSlotmachine(
 			Displayable display,
@@ -29,19 +32,44 @@ final public class TerminalSlotmachine implements Slotmachine {
 	) {
 		this.display = display;
 		this.winningConditionDetector = winningConditionDetector;
-		this.rows = initializeRowsRandomly(slotMachineRowSize);
 	}
 
 	@Override
 	public void play() {
-		display.display(rows);
-		display.displayMessage(getResultMessage());
+		Boolean isGameWon = playRound();
+		while(!isGameWon) {
+			if (!doesUserWantToContinue(getUserInput()))
+				break;
+			isGameWon = playRound();
+		}
 	}
 
-	private String getResultMessage() {
-		final String positiveMessage = "Congratulations! You won! Your prize is a job offer!";
-		final String negativeMessage = "No luck this time. Try again!";
+	private Boolean playRound() {
+		this.rows = initializeRowsRandomly(slotMachineRowSize);
+
 		final Boolean isGameWon = winningConditionDetector.isWinningConditionMet(rows);
+		final String resultMessage = getResultMessage(isGameWon);
+
+		display.display(rows);
+		display.displayMessage(resultMessage);
+
+		return isGameWon;
+	}
+
+	private String getUserInput() {
+		Scanner scanner = new Scanner(System.in);
+		return scanner.nextLine();
+	}
+
+	private Boolean doesUserWantToContinue (String input) {
+		if (input.equals("c"))
+			return false;
+		return true;
+	}
+
+	private String getResultMessage(Boolean isGameWon) {
+		final String positiveMessage = "Congratulations! You won! Your prize is a job offer!";
+		final String negativeMessage = "No luck this time. Try again by pressing ENTER, or stop by pressing C!";
 
 		if(isGameWon)
 			return positiveMessage;
