@@ -1,10 +1,8 @@
-package phugen.slotmachine.service;
+package phugen.slotmachine.service.implementations;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import phugen.slotmachine.dto.Row;
-import phugen.slotmachine.service.implementations.WinningConditionDetectorImplCheat;
-import phugen.slotmachine.service.implementations.WinningConditionDetectorImplTraditional;
 import phugen.slotmachine.service.interfaces.WinningConditionDetector;
 
 import java.util.List;

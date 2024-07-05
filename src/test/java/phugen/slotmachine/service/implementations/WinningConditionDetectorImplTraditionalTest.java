@@ -1,4 +1,4 @@
-package phugen.slotmachine.service;
+package phugen.slotmachine.service.implementations;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
