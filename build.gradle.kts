@@ -39,3 +39,9 @@ dependencies {
 tasks.withType<Test> {
 	useJUnitPlatform()
 }
+
+tasks.jar {
+	manifest {
+		attributes("Main-Class" to "phugen.slotmachine.SlotmachineApplication")
+	}
+}
