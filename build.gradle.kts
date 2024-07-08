@@ -17,9 +17,22 @@ repositories {
 	mavenCentral()
 }
 
+ext {
+	set("testcontainers.version", "1.19.8")
+}
+
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter")
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
+	runtimeOnly("org.postgresql:postgresql")
+
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
+	testImplementation("org.testcontainers:testcontainers")
+	testImplementation("org.testcontainers:postgresql")
+	testImplementation("org.testcontainers:junit-jupiter")
+
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 

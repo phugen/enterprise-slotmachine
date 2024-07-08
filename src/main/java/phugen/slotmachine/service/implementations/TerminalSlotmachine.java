@@ -3,16 +3,18 @@ package phugen.slotmachine.service.implementations;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import phugen.slotmachine.dto.Row;
+import phugen.slotmachine.model.RoundResult;
+import phugen.slotmachine.repository.interfaces.HistoricalResultDataProvider;
 import phugen.slotmachine.service.interfaces.Displayable;
 import phugen.slotmachine.service.interfaces.Slotmachine;
 import phugen.slotmachine.service.interfaces.WinningConditionDetector;
 
+import java.text.DecimalFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
-
-import static java.lang.System.exit;
+import java.util.stream.Collectors;
 
 /**
  * This class represents an emulated slot machine that can
@@ -24,52 +26,50 @@ final public class TerminalSlotmachine implements Slotmachine {
 	private final int slotMachineRowSize = 3;
 	private final Displayable display;
 	private final WinningConditionDetector winningConditionDetector;
+
+	private final HistoricalResultDataProvider history;
 	private List<Row> rows;
 
 	public TerminalSlotmachine(
 			Displayable display,
-			@Qualifier("playFair") WinningConditionDetector winningConditionDetector
+			@Qualifier("playFair") WinningConditionDetector winningConditionDetector,
+			HistoricalResultDataProvider history
 	) {
 		this.display = display;
 		this.winningConditionDetector = winningConditionDetector;
+		this.history = history;
 	}
 
 	@Override
 	public void play() {
 		Boolean isGameWon = playRound();
 		while(!isGameWon) {
-			if (!doesUserWantToContinue(getUserInput()))
-				break;
 			isGameWon = playRound();
 		}
+
+		String statisticsMessage = getGamesPlayedMessage();
+		display.displayMessage(statisticsMessage);
 	}
 
 	private Boolean playRound() {
 		this.rows = initializeRowsRandomly(slotMachineRowSize);
-
 		final Boolean isGameWon = winningConditionDetector.isWinningConditionMet(rows);
 		final String resultMessage = getResultMessage(isGameWon);
 
 		display.display(rows);
 		display.displayMessage(resultMessage);
 
+		this.history.saveResultData(new RoundResult(
+				this.rows,
+				isGameWon
+		));
+
 		return isGameWon;
-	}
-
-	private String getUserInput() {
-		Scanner scanner = new Scanner(System.in);
-		return scanner.nextLine();
-	}
-
-	private Boolean doesUserWantToContinue (String input) {
-		if (input.equals("c"))
-			return false;
-		return true;
 	}
 
 	private String getResultMessage(Boolean isGameWon) {
 		final String positiveMessage = "Congratulations! You won! Your prize is a job offer!";
-		final String negativeMessage = "No luck this time. Try again by pressing ENTER, or stop by pressing C!";
+		final String negativeMessage = "No luck this time. Try again!";
 
 		if(isGameWon)
 			return positiveMessage;
@@ -99,5 +99,20 @@ final public class TerminalSlotmachine implements Slotmachine {
 		}
 
 		return initializedRows;
+	}
+
+	private String getGamesPlayedMessage() {
+		List<RoundResult> result = history.getResultDataAfter(LocalDateTime.now().minusHours(1));
+
+		Integer gamesPlayedInLastHour = result.size();
+		Integer gamesWonInLastHour = result
+				.stream()
+				.filter(RoundResult::getWasWin)
+				.toList()
+				.size();
+		Float percentWon = gamesPlayedInLastHour.floatValue() / gamesWonInLastHour.floatValue();
+
+		return "\nYou have played " + gamesPlayedInLastHour + " games in the last hour of which you have won "
+				+ gamesWonInLastHour + ". That's " + String.format(percentWon.toString(), new DecimalFormat("#0.00")) + "%!\n\n";
 	}
 }
