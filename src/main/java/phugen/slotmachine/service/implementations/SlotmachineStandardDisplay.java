@@ -2,7 +2,7 @@ package phugen.slotmachine.service.implementations;
 
 import org.springframework.stereotype.Service;
 import phugen.slotmachine.dto.Row;
-import phugen.slotmachine.service.interfaces.Displayable;
+import phugen.slotmachine.service.interfaces.SlotmachineDisplay;
 
 import java.util.List;
 import java.util.logging.*;
@@ -12,7 +12,7 @@ import java.util.logging.*;
  * contents of a slot machine.
  */
 @Service
-final public class SlotmachineStandardDisplay implements Displayable {
+final public class SlotmachineStandardDisplay implements SlotmachineDisplay {
 
 	private final Logger logger = Logger.getLogger(this.getClass().getName());
 
@@ -21,12 +21,11 @@ final public class SlotmachineStandardDisplay implements Displayable {
 	}
 
 	@Override
-	public <T> void display(List<T> data) {
-		final String errorMessage = "can't display non-slotmachine row data";
-		if (!(hasValidDataFormat(data)))
-			throw new IllegalArgumentException(errorMessage);
-
-		showDataInTerminal(data);
+	public void display(List<Row> data) {
+		data.forEach( it -> {
+			logger.info(it.toString());
+			logger.info("\n");
+		});
 	}
 
 	@Override
@@ -47,22 +46,5 @@ final public class SlotmachineStandardDisplay implements Displayable {
 
 		logger.addHandler(handler);
 		logger.setLevel(Level.ALL);
-	}
-
-	private <T> Boolean hasValidDataFormat(List<T> data) {
-		if(data.isEmpty())
-			return true;
-
-		if (!(data.get(0) instanceof Row))
-			return false;
-
-		return true;
-	}
-
-	private <T> void showDataInTerminal(List<T> rows) {
-		rows.forEach( it -> {
-			logger.info(it.toString());
-			logger.info("\n");
-		});
 	}
 }

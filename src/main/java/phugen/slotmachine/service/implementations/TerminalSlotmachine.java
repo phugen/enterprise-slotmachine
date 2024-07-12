@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import phugen.slotmachine.dto.Row;
 import phugen.slotmachine.model.RoundResult;
 import phugen.slotmachine.repository.interfaces.HistoricalResultDataProvider;
-import phugen.slotmachine.service.interfaces.Displayable;
+import phugen.slotmachine.service.interfaces.SlotmachineDisplay;
 import phugen.slotmachine.service.interfaces.Slotmachine;
 import phugen.slotmachine.service.interfaces.WinningConditionDetector;
 
@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 /**
  * This class represents an emulated slot machine that can
@@ -24,14 +23,14 @@ import java.util.stream.Collectors;
 final public class TerminalSlotmachine implements Slotmachine {
 
 	private final int slotMachineRowSize = 3;
-	private final Displayable display;
+	private final SlotmachineDisplay display;
 	private final WinningConditionDetector winningConditionDetector;
 
 	private final HistoricalResultDataProvider history;
 	private List<Row> rows;
 
 	public TerminalSlotmachine(
-			Displayable display,
+			SlotmachineDisplay display,
 			@Qualifier("playFair") WinningConditionDetector winningConditionDetector,
 			HistoricalResultDataProvider history
 	) {
