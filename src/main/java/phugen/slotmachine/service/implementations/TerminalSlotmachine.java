@@ -30,7 +30,7 @@ final public class TerminalSlotmachine implements Slotmachine {
 	private List<Row> rows;
 
 	public TerminalSlotmachine(
-			SlotmachineDisplay display,
+			@Qualifier("standard") SlotmachineDisplay display,
 			@Qualifier("playFair") WinningConditionDetector winningConditionDetector,
 			HistoricalResultDataProvider history
 	) {

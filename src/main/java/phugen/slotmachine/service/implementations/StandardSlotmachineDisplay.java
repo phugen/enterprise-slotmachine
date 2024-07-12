@@ -1,5 +1,6 @@
 package phugen.slotmachine.service.implementations;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import phugen.slotmachine.dto.Row;
 import phugen.slotmachine.service.interfaces.SlotmachineDisplay;
@@ -12,17 +13,18 @@ import java.util.logging.*;
  * contents of a slot machine.
  */
 @Service
-final public class SlotmachineStandardDisplay implements SlotmachineDisplay {
+@Qualifier("standard")
+final public class StandardSlotmachineDisplay implements SlotmachineDisplay {
 
 	private final Logger logger = Logger.getLogger(this.getClass().getName());
 
-	public SlotmachineStandardDisplay() {
+	public StandardSlotmachineDisplay() {
 		configureDisplayFormat();
 	}
 
 	@Override
-	public void display(List<Row> data) {
-		data.forEach( it -> {
+	public void display(List<Row> rows) {
+		rows.forEach( it -> {
 			logger.info(it.toString());
 			logger.info("\n");
 		});
