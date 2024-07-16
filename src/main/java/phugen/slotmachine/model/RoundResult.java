@@ -38,6 +38,8 @@ public class RoundResult {
 		return id;
 	}
 
+	public void setDatePlayed(LocalDateTime dateTime) { this.datePlayed = dateTime; }
+
 	public LocalDateTime getDatePlayed() {
 		return datePlayed;
 	}

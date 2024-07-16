@@ -1,4 +1,4 @@
-package phugen.slotmachine.service.implementations;
+package phugen.slotmachine.service.implementations.integration;
 
 import java.time.temporal.ChronoUnit;
 
@@ -34,13 +34,13 @@ import static org.springframework.test.util.AssertionErrors.assertEquals;
 @Testcontainers
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@ContextConfiguration(initializers = {HistoricalResultDataProviderTest.Initializer.class})
+@ContextConfiguration(initializers = {SlotmachineResultDataProviderTest.Initializer.class})
 @SpringBootTest
-public class HistoricalResultDataProviderTest {
+public class SlotmachineResultDataProviderTest {
 	private final RoundResultRepository repository;
 	private final HistoricalResultDataProvider dataProvider;
 
-	public HistoricalResultDataProviderTest(
+	public SlotmachineResultDataProviderTest(
 			RoundResultRepository repository,
 			HistoricalResultDataProvider dataProvider
 
