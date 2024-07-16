@@ -111,7 +111,11 @@ final public class TerminalSlotmachine implements Slotmachine {
 				.size();
 		Float percentWon = (gamesWonInLastHour.floatValue() / gamesPlayedInLastHour.floatValue()) * 100;
 
-		return "\nYou have played " + gamesPlayedInLastHour + " games in the last hour of which you have won "
-				+ gamesWonInLastHour + ". That's " + String.format(percentWon.toString(), new DecimalFormat("#0.00")) + "%!\n\n";
+		return "\nYou have played "
+				+ gamesPlayedInLastHour
+				+ " games in the last hour of which you have won "
+				+ gamesWonInLastHour
+				+ ". That's "
+				+ String.format(percentWon.toString(), new DecimalFormat("#0.00")) + "%!\n\n";
 	}
 }
